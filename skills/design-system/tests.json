@@ -1,0 +1,119 @@
+{
+  "skill": "design-system",
+  "model": "claude-haiku-4-5-20251001",
+  "tests": [
+    {
+      "name": "asks discovery questions before generating",
+      "prompt": "Generate a design system for my project",
+      "assert": [
+        {
+          "type": "pattern",
+          "value": "(mood|density|dark mode|color|feel|audience|purpose)",
+          "description": "Should ask about project identity before generating tokens"
+        }
+      ]
+    },
+    {
+      "name": "describes philosophy before tokens",
+      "prompt": "I'm building a fintech dashboard for enterprise users. It should feel serious, data-dense, dark mode only. No bright colors.",
+      "assert": [
+        {
+          "type": "pattern",
+          "value": "(feel|imagine|picture|opening|visual)",
+          "description": "Should paint a visual picture of the design philosophy"
+        },
+        {
+          "type": "not-contains",
+          "value": "--color-primary: #",
+          "description": "Should not jump straight to token values without alignment"
+        }
+      ]
+    },
+    {
+      "name": "generates CSS custom properties",
+      "prompt": "Yes that feels right. Generate the full token set. I'm using Tailwind + CSS variables.",
+      "assert": [
+        {
+          "type": "pattern",
+          "value": "--color-[a-z]",
+          "description": "Should output CSS custom properties for colors"
+        },
+        {
+          "type": "pattern",
+          "value": "--space-[0-9]",
+          "description": "Should output spacing tokens"
+        }
+      ]
+    },
+    {
+      "name": "recommends component library with reasoning",
+      "prompt": "I'm building a React SaaS product with Tailwind. What component library should I use?",
+      "assert": [
+        {
+          "type": "pattern",
+          "value": "(shadcn|Radix|Material|Chakra|Ant Design|Headless)",
+          "description": "Should recommend a specific component library"
+        },
+        {
+          "type": "pattern",
+          "value": "(because|since|fits|matches|works for)",
+          "description": "Should explain WHY the library fits this project"
+        }
+      ]
+    },
+    {
+      "name": "includes dark mode tokens when requested",
+      "prompt": "Generate a color system with dark mode support for a developer tool",
+      "assert": [
+        {
+          "type": "pattern",
+          "value": "(dark|@media.*prefers-color-scheme|\\[data-theme|dark mode)",
+          "description": "Should include dark mode variant or mention dark mode approach"
+        }
+      ]
+    },
+    {
+      "name": "adjusts density for data-heavy apps",
+      "prompt": "This is a trading platform with lots of real-time data, charts, and tables. Users are on it 8 hours a day.",
+      "assert": [
+        {
+          "type": "pattern",
+          "value": "(compact|dense|tight|4px|8px|small)",
+          "description": "Should recommend compact spacing for data-heavy frequent-use apps"
+        }
+      ]
+    },
+    {
+      "name": "palette command focuses on color",
+      "prompt": "I need help with my color palette. My brand color is #6366f1 (indigo). Building a B2B product.",
+      "assert": [
+        {
+          "type": "pattern",
+          "value": "(#[0-9a-fA-F]{6}|rgb|hsl)",
+          "description": "Should provide actual color values"
+        },
+        {
+          "type": "pattern",
+          "value": "(primary|secondary|neutral|semantic|surface)",
+          "description": "Should organize colors into semantic categories"
+        }
+      ]
+    },
+    {
+      "name": "respects existing tech stack",
+      "prompt": "We use Vue 3 with Nuxt and UnoCSS. What's the best component approach?",
+      "assert": [
+        {
+          "type": "not-contains",
+          "value": "npm install @shadcn",
+          "description": "Should not recommend React-only libraries for a Vue project"
+        },
+        {
+          "type": "pattern",
+          "value": "(Vue|Nuxt|UnoCSS|Headless UI|Radix Vue|PrimeVue|Naive UI)",
+          "description": "Should recommend Vue-compatible solutions"
+        }
+      ]
+    }
+  ]
+}

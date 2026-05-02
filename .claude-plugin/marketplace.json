@@ -1,0 +1,11 @@
+{
+  "name": "design-system",
+  "description": "Analyze a project's identity and generate a complete design system — tokens, colors, spacing, components, and library choices — matched to the product's personality and audience",
+  "version": "1.0.0",
+  "skills": [
+    {
+      "name": "design-system",
+      "path": "skills/design-system/SKILL.md"
+    }
+  ]
+}
