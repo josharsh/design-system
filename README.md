@@ -6,14 +6,18 @@ A design system is not a collection of random decisions. It's a personality expr
 
 ## Install
 
-```bash
-/plugin marketplace add design-system
+In Claude Code, run:
+
+```
+/plugin marketplace add josharsh/design-system
 ```
 
 Or manually:
 
 ```bash
-./install.sh
+mkdir -p ~/.claude/skills/design-system
+curl -sL https://raw.githubusercontent.com/josharsh/design-system/main/skills/design-system/SKILL.md \
+  -o ~/.claude/skills/design-system/SKILL.md
 ```
 
 ## What It Does
